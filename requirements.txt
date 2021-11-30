@@ -5,3 +5,12 @@ djangorestframework
 djangorestframework-simplejwt
 drf-yasg
 python-decouple
+
+
+django-filter
+celery
+redis
+django-modeltranslation
+bs4
+requests
+

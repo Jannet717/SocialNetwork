@@ -6,7 +6,9 @@ from django.db import models
 class MyUserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, username, email, password, **extra_fields):
+    def create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('Email is required')
         email = self.normalize_email(email)
         user = self.model(email=email)
         user.set_password(password)
@@ -18,7 +20,7 @@ class MyUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email)
         user.set_password(password)
-        user.is_active = True
+        user.is_active = True,
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -26,13 +28,13 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractUser):
-    username = models.CharField(max_length=155, unique=True)
+    username = None
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=250)
     avatar = models.ImageField(upload_to='users', blank=True, null=True)
     is_active = models.BooleanField(default=False)
-    activation_code = models.CharField(max_length=6, blank=True)
+    activation_code = models.CharField(max_length=50, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

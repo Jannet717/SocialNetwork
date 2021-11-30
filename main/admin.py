@@ -14,4 +14,6 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [PostImageInLine, ]
 
 
-# admin.site.register(Category)
+admin.site.register(Comment)
+admin.site.register(Likes)
+admin.site.register(Rating)
